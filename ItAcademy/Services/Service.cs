@@ -34,6 +34,11 @@ namespace ItAcademy.Services
         public DataTable GetMedicamentosByCode(string code)
         {
             DataTable data = new DataTable();
+            data.Columns.Add("Substancia", typeof(string));
+            data.Columns.Add("Apresentacao",typeof(string));
+            data.Columns.Add("Produto", typeof(string));
+            data.Columns.Add("PFIsento", typeof(string));
+
             MedicamentoDTO menor = new MedicamentoDTO(), maior = new MedicamentoDTO();
             List<Medicamento> medicamentos = this._dbContext.Medicamentos.Where(m => m.EAN1 == long.Parse(code)).OrderBy(m => m.PMCZero).ToList();
             if (medicamentos != null)
@@ -44,15 +49,19 @@ namespace ItAcademy.Services
                 menor.Produto = medicamentos[0].Produto;
                 menor.PFIsento = medicamentos[0].PFIsento;
 
-                maior.Substancia = medicamentos[medicamentos.Count - 1].Substancia;
-                maior.Apresentacao = medicamentos[medicamentos.Count - 1].Apresentacao;
-                maior.Produto = medicamentos[medicamentos.Count - 1].Produto;
-                maior.PFIsento = medicamentos[medicamentos.Count - 1].PFIsento;
+                if(medicamentos.Count > 1)
+                {
+                    maior.Substancia = medicamentos[medicamentos.Count - 1].Substancia;
+                    maior.Apresentacao = medicamentos[medicamentos.Count - 1].Apresentacao;
+                    maior.Produto = medicamentos[medicamentos.Count - 1].Produto;
+                    maior.PFIsento = medicamentos[medicamentos.Count - 1].PFIsento;
+                    data.Rows.Add(maior.Substancia, maior.Apresentacao, maior.Produto, maior.PFIsento);
+                }
                 #endregion
 
-                data.Rows.Add(maior);
-                data.Rows.Add(menor);
-                data.Rows.Add($"Diferença: {(medicamentos[medicamentos.Count - 1].PMCZero - medicamentos[0].PMCZero)}");
+                data.Rows.Add(menor.Substancia, menor.Apresentacao, menor.Produto, menor.PFIsento);
+
+                data.Rows.Add( medicamentos.Count == 1 ? string.Format($"Apenas um registro encontrado.") : string.Format($"Diferença:"), medicamentos[medicamentos.Count - 1].PMCZero - medicamentos[0].PMCZero);
             }
 
             return data;
