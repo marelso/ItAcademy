@@ -1,2 +1,2 @@
-# ItAcademy
-Repositório criado para versionar a solução do desafio proposto pela Dell no processo It Academy.
+# Dell It Academy
+Solução proposta para ler registros do arquivo .csv fornecido e trabalhar os dados contidos nele.
