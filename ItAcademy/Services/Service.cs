@@ -10,14 +10,15 @@ using ItAcademy.Models;
 
 namespace ItAcademy.Services
 {
-    public class Service0
+    public class Service
     {
         Context _dbContext = new Context();
 
-        public MedicamentoDTO GetMedicamentoByName(string nome)
+        public List<MedicamentoDTO> GetMedicamentoByName(string nome)
         {
+            var medicamentosDTO = new List<MedicamentoDTO>();
             var medicamentoDTO = new MedicamentoDTO();
-            var medicamento = this._dbContext.Medicamentos.Where(m => m.Substancia == nome && m.Comercializacao2020 == true).FirstOrDefault();
+            var medicamento = this._dbContext.Medicamentos.Where(m => m.Substancia == nome && m.Comercializacao2020).FirstOrDefault();
             if (medicamento != null)
             {
                 medicamentoDTO.Substancia = medicamento.Substancia;
@@ -25,15 +26,16 @@ namespace ItAcademy.Services
                 medicamentoDTO.Produto = medicamento.Produto;
                 medicamentoDTO.PFIsento = medicamento.PFIsento;
             }
+            medicamentosDTO.Add(medicamentoDTO);
 
-            return medicamentoDTO;
+            return medicamentosDTO;
         }
 
         public DataTable GetMedicamentosByCode(string code)
         {
             DataTable data = new DataTable();
             MedicamentoDTO menor = new MedicamentoDTO(), maior = new MedicamentoDTO();
-            List<Medicamento> medicamentos = this._dbContext.Medicamentos.Where(m => m.EAN1 == Convert.ToInt32(code)).OrderBy(m => m.PMCZero).ToList();
+            List<Medicamento> medicamentos = this._dbContext.Medicamentos.Where(m => m.EAN1 == long.Parse(code)).OrderBy(m => m.PMCZero).ToList();
             if (medicamentos != null)
             {
                 #region Load DTOs
@@ -58,72 +60,136 @@ namespace ItAcademy.Services
 
         public void ImportDatabase(string csvPath)
         {
-            var config = new CsvConfiguration(CultureInfo.CurrentCulture)
+            try
             {
-                Delimiter = ";",
-                HasHeaderRecord = true
-            };
+                List<Medicamento> medicamentos = new List<Medicamento>();
+                string[] lines = File.ReadAllLines(csvPath, Encoding.GetEncoding("ISO-8859-1"));
 
-            using (var reader = new StreamReader(csvPath))
-            using (var csv = new CsvReader(reader, config))
-            {
-                var records = csv.GetRecords<FileRows>().Select(row => new Medicamento()
+                foreach (string line in lines)
                 {
-                    #region Setting up props
-                    Substancia = row.Substancia,
-                    CNPJ = row.CNPJ,
-                    Laboratorio = row.Laboratorio,
-                    CodGGREM = row.CodGGREM,
-                    Registro = row.Registro,
-                    EAN1 = row.EAN1,
-                    EAN2 = row.EAN2,
-                    EAN3 = row.EAN3,
-                    Produto = row.Produto,
-                    Apresentacao = row.Apresentacao,
-                    ClasseTerapeutica = row.ClasseTerapeutica,
-                    TipoProduto = row.TipoProduto,
-                    RegimePreco = row.RegimePreco,
-                    PFIsento = row.PFIsento,
-                    PFZero = row.PFZero,
-                    PF12 = row.PF12,
-                    PF17 = row.PF17,
-                    PF17ALC = row.PF17ALC,
-                    PF175 = row.PF175,
-                    PF18 = row.PF18,
-                    PF18ALC = row.PF18ALC,
-                    PF20 = row.PF20,
-                    PMCZero = row.PMCZero,
-                    PMC12 = row.PMC12,
-                    PMC17 = row.PMC17,
-                    PMC17ALC = row.PMC17ALC,
-                    PMC175 = row.PMC175,
-                    PMC175ALC = row.PMC175ALC,
-                    PMC18 = row.PMC18,
-                    PMC18ALC = row.PMC18ALC,
-                    PMC20 = row.PMC20,
-                    Restricao = row.Restricao,
-                    CAP = row.CAP,
-                    CONFAZ = row.CONFAZ,
-                    ICMSZero = row.ICMSZero,
-                    AnaliseRecursal = row.AnaliseRecursal,
-                    ConcessaoCredito = row.ConcessaoCredito,
-                    Comercializacao2020 = row.Comercializacao2020,
-                    TARJA = row.TARJA,
-                    #endregion
-                });
+                    if (line.Contains("SUBSTÂNCIA") || string.IsNullOrEmpty(line))
+                        continue;
 
-                using (_dbContext)
-                {
-                    while (true)
+                    var medicamento = new Medicamento();
+
+                    if (line.Contains("\""))
                     {
-                        var items = records.Take(100_000).ToList();
+                        continue;
+                        #region não consegui tratar os registros corrompidos com os ; dentro das aspas, tentei de uma forma e foi parcialmente sucedida. Quando encontrar um padrão correto tento novamente.
+                        string[] partes = line.Split("\"");
+                        string[] row = partes[2].Split(";");
 
-                        if (items.Any() == false) break;
-
-                        _dbContext.AddRange(items);
-                        _dbContext.SaveChanges();
+                        #region Setting up props
+                        medicamento.Substancia = partes[1];
+                        medicamento.CNPJ = row[1];
+                        medicamento.Laboratorio = row[2];
+                        medicamento.CodGGREM = !row[3].Contains("-") ? long.Parse(row[3]) : null;
+                        medicamento.Registro = !row[4].Contains("-") ? long.Parse(row[4]) : null;
+                        medicamento.EAN1 = !row[5].Contains("-") ? long.Parse(row[5]) : null;
+                        medicamento.EAN2 = !row[6].Contains("-") ? long.Parse(row[6]) : null;
+                        medicamento.EAN3 = !row[7].Contains("-") ? long.Parse(row[7]) : null;
+                        medicamento.Produto = row[8];
+                        medicamento.Apresentacao = row[9];
+                        medicamento.ClasseTerapeutica = row[10];
+                        medicamento.TipoProduto = row[11];
+                        medicamento.RegimePreco = row[12];
+                        medicamento.PFIsento = !string.IsNullOrEmpty(row[13]) ? double.Parse(row[13]) : null;
+                        medicamento.PFZero = !string.IsNullOrEmpty(row[14]) ? double.Parse(row[14]) : null;
+                        medicamento.PF12 = !string.IsNullOrEmpty(row[15]) ? double.Parse(row[15]) : null;
+                        medicamento.PF17 = !string.IsNullOrEmpty(row[16]) ? double.Parse(row[16]) : null;
+                        medicamento.PF17ALC = !string.IsNullOrEmpty(row[17]) ? double.Parse(row[17]) : null;
+                        medicamento.PF175 = !string.IsNullOrEmpty(row[18]) ? double.Parse(row[18]) : null;
+                        medicamento.PF18 = !string.IsNullOrEmpty(row[19]) ? double.Parse(row[19]) : null;
+                        medicamento.PF18ALC = !string.IsNullOrEmpty(row[20]) ? double.Parse(row[20]) : null;
+                        medicamento.PF20 = !string.IsNullOrEmpty(row[21]) ? double.Parse(row[21]) : null;
+                        medicamento.PMCZero = !string.IsNullOrEmpty(row[22]) ? double.Parse(row[22]) : null;
+                        medicamento.PMC12 = !string.IsNullOrEmpty(row[23]) ? double.Parse(row[23]) : null;
+                        medicamento.PMC17 = !string.IsNullOrEmpty(row[24]) ? double.Parse(row[24]) : null;
+                        medicamento.PMC17ALC = !string.IsNullOrEmpty(row[25]) ? double.Parse(row[25]) : null;
+                        medicamento.PMC175 = !string.IsNullOrEmpty(row[26]) ? double.Parse(row[26]) : null;
+                        medicamento.PMC175ALC = !string.IsNullOrEmpty(row[27]) ? double.Parse(row[27]) : null;
+                        medicamento.PMC18 = !string.IsNullOrEmpty(row[28]) ? double.Parse(row[28]) : null;
+                        medicamento.PMC18ALC = !string.IsNullOrEmpty(row[29]) ? double.Parse(row[29]) : null;
+                        medicamento.PMC20 = !string.IsNullOrEmpty(row[30]) ? double.Parse(row[30]) : null;
+                        medicamento.Restricao = row[31].ToLower() == "sim" ? true : false;
+                        medicamento.CAP = row[32].ToLower() == "sim" ? true : false;
+                        medicamento.CONFAZ = row[33].ToLower() == "sim" ? true : false;
+                        medicamento.ICMSZero = row[34].ToLower() == "sim" ? true : false;
+                        medicamento.AnaliseRecursal = row[35];
+                        medicamento.ConcessaoCredito = row[36];
+                        medicamento.Comercializacao2020 = row[37].ToLower() == "sim" ? true : false; ;
+                        medicamento.TARJA = row[38];
+                        #endregion
+                        #endregion
                     }
+                    else
+                    {
+                        string[] row = line.Split(";");
+
+                        #region Setting up props
+                        medicamento.Substancia = row[0];
+                        medicamento.CNPJ = row[1];
+                        medicamento.Laboratorio = row[2];
+                        medicamento.CodGGREM = !row[3].Contains("-") ? long.Parse(row[3]) : null;
+                        medicamento.Registro = !row[4].Contains("-") ? long.Parse(row[4]) : null;
+                        medicamento.EAN1 = !row[5].Contains("-") ? long.Parse(row[5]) : null;
+                        medicamento.EAN2 = !row[6].Contains("-") ? long.Parse(row[6]) : null;
+                        medicamento.EAN3 = !row[7].Contains("-") ? long.Parse(row[7]) : null;
+                        medicamento.Produto = row[8];
+                        medicamento.Apresentacao = row[9];
+                        medicamento.ClasseTerapeutica = row[10];
+                        medicamento.TipoProduto = row[11];
+                        medicamento.RegimePreco = row[12];
+                        medicamento.PFIsento = !string.IsNullOrEmpty(row[13]) ? double.Parse(row[13].Replace(",", ".")) : null;
+                        medicamento.PFZero = !string.IsNullOrEmpty(row[14]) ? double.Parse(row[14].Replace(",", ".")) : null;
+                        medicamento.PF12 = !string.IsNullOrEmpty(row[15]) ? double.Parse(row[15].Replace(",", ".")) : null;
+                        medicamento.PF17 = !string.IsNullOrEmpty(row[16]) ? double.Parse(row[16].Replace(",", ".")) : null;
+                        medicamento.PF17ALC = !string.IsNullOrEmpty(row[17]) ? double.Parse(row[17].Replace(",", ".")) : null;
+                        medicamento.PF175 = !string.IsNullOrEmpty(row[18]) ? double.Parse(row[18].Replace(",", ".")) : null;
+                        medicamento.PF175ALC = !string.IsNullOrEmpty(row[19]) ? double.Parse(row[19].Replace(",", ".")) : null;
+                        medicamento.PF18 = !string.IsNullOrEmpty(row[20]) ? double.Parse(row[20].Replace(",", ".")) : null;
+                        medicamento.PF18ALC = !string.IsNullOrEmpty(row[21]) ? double.Parse(row[21].Replace(",", ".")) : null;
+                        medicamento.PF20 = !string.IsNullOrEmpty(row[22]) ? double.Parse(row[22].Replace(",", ".")) : null;
+                        medicamento.PMCZero = !string.IsNullOrEmpty(row[23]) ? double.Parse(row[23].Replace(",", ".")) : null;
+                        medicamento.PMC12 = !string.IsNullOrEmpty(row[24]) ? double.Parse(row[24].Replace(",", ".")) : null;
+                        medicamento.PMC17 = !string.IsNullOrEmpty(row[25]) ? double.Parse(row[25].Replace(",", ".")) : null;
+                        medicamento.PMC17ALC = !string.IsNullOrEmpty(row[26]) ? double.Parse(row[26].Replace(",", ".")) : null;
+                        medicamento.PMC175 = !string.IsNullOrEmpty(row[27]) ? double.Parse(row[27].Replace(",", ".")) : null;
+                        medicamento.PMC175ALC = !string.IsNullOrEmpty(row[28]) ? double.Parse(row[28].Replace(",", ".")) : null;
+                        medicamento.PMC18 = !string.IsNullOrEmpty(row[29]) ? double.Parse(row[29].Replace(",", ".")) : null;
+                        medicamento.PMC18ALC = !string.IsNullOrEmpty(row[30]) ? double.Parse(row[30].Replace(",", ".")) : null;
+                        medicamento.PMC20 = !string.IsNullOrEmpty(row[31]) ? double.Parse(row[31].Replace(",", ".")) : null;
+                        medicamento.Restricao = row[32].ToLower() == "sim" ? true : false;
+                        medicamento.CAP = row[33].ToLower() == "sim" ? true : false;
+                        medicamento.CONFAZ = row[34].ToLower() == "sim" ? true : false;
+                        medicamento.ICMSZero = row[35].ToLower() == "sim" ? true : false;
+                        medicamento.AnaliseRecursal = row[36];
+                        medicamento.ConcessaoCredito = row[37];
+                        medicamento.Comercializacao2020 = row[38].ToLower() == "sim" ? true : false; ;
+                        medicamento.TARJA = row[39];
+                        #endregion
+                    }
+
+                    medicamentos.Add(medicamento);
                 }
+
+                while (true)
+                {
+                    if (!medicamentos.Any())
+                        break;
+
+                    _dbContext.AddRange(medicamentos);
+                    medicamentos.Clear();
+
+                    if (_dbContext.SaveChanges() > 0)
+                        MessageBox.Show("A tabela foi importada com sucesso.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    else
+                        MessageBox.Show("A tabela não foi importada com sucesso.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }                
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
             }
         }
     }

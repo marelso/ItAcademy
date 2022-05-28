@@ -32,26 +32,22 @@
             this.btnImportFile = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnSearch = new System.Windows.Forms.Button();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabInfos = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.Nome = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Produto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Apresentacao = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PFIsento = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gridName = new System.Windows.Forms.DataGridView();
             this.txtName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.gridCode = new System.Windows.Forms.DataGridView();
             this.txtCodebar = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.tabControl1.SuspendLayout();
+            this.tabInfos.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridName)).BeginInit();
             this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridCode)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -85,7 +81,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.btnSearch);
-            this.groupBox2.Controls.Add(this.tabControl1);
+            this.groupBox2.Controls.Add(this.tabInfos);
             this.groupBox2.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.groupBox2.Location = new System.Drawing.Point(12, 99);
             this.groupBox2.Name = "groupBox2";
@@ -105,82 +101,50 @@
             this.btnSearch.TabIndex = 13;
             this.btnSearch.Text = "Localizar";
             this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
-            // tabControl1
+            // tabInfos
             // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.tabInfos.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(6, 34);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(993, 479);
-            this.tabControl1.TabIndex = 0;
+            this.tabInfos.Controls.Add(this.tabPage1);
+            this.tabInfos.Controls.Add(this.tabPage2);
+            this.tabInfos.Location = new System.Drawing.Point(6, 34);
+            this.tabInfos.Name = "tabInfos";
+            this.tabInfos.SelectedIndex = 0;
+            this.tabInfos.Size = new System.Drawing.Size(993, 290);
+            this.tabInfos.TabIndex = 0;
             // 
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.White;
-            this.tabPage1.Controls.Add(this.dataGridView1);
+            this.tabPage1.Controls.Add(this.gridName);
             this.tabPage1.Controls.Add(this.txtName);
             this.tabPage1.Controls.Add(this.label1);
             this.tabPage1.Location = new System.Drawing.Point(4, 34);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(985, 441);
+            this.tabPage1.Size = new System.Drawing.Size(985, 252);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Pesquisar por nome";
             // 
-            // dataGridView1
+            // gridName
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.gridName.AllowUserToAddRows = false;
+            this.gridName.AllowUserToDeleteRows = false;
+            this.gridName.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView1.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(171)))), ((int)(((byte)(180)))), ((int)(((byte)(181)))));
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Nome,
-            this.Produto,
-            this.Apresentacao,
-            this.PFIsento});
-            this.dataGridView1.Location = new System.Drawing.Point(6, 39);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.RowTemplate.Height = 25;
-            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(973, 396);
-            this.dataGridView1.TabIndex = 8;
-            // 
-            // Nome
-            // 
-            this.Nome.HeaderText = "Nome";
-            this.Nome.Name = "Nome";
-            this.Nome.ReadOnly = true;
-            this.Nome.Width = 240;
-            // 
-            // Produto
-            // 
-            this.Produto.HeaderText = "Produto";
-            this.Produto.Name = "Produto";
-            this.Produto.ReadOnly = true;
-            this.Produto.Width = 240;
-            // 
-            // Apresentacao
-            // 
-            this.Apresentacao.HeaderText = "Apresentação";
-            this.Apresentacao.Name = "Apresentacao";
-            this.Apresentacao.ReadOnly = true;
-            this.Apresentacao.Width = 240;
-            // 
-            // PFIsento
-            // 
-            this.PFIsento.HeaderText = "PF Sem Impostos";
-            this.PFIsento.Name = "PFIsento";
-            this.PFIsento.ReadOnly = true;
-            this.PFIsento.Width = 210;
+            this.gridName.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(171)))), ((int)(((byte)(180)))), ((int)(((byte)(181)))));
+            this.gridName.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridName.Location = new System.Drawing.Point(6, 39);
+            this.gridName.Name = "gridName";
+            this.gridName.ReadOnly = true;
+            this.gridName.RowTemplate.Height = 25;
+            this.gridName.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridName.Size = new System.Drawing.Size(973, 207);
+            this.gridName.TabIndex = 8;
             // 
             // txtName
             // 
@@ -205,28 +169,28 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.White;
-            this.tabPage2.Controls.Add(this.dataGridView2);
+            this.tabPage2.Controls.Add(this.gridCode);
             this.tabPage2.Controls.Add(this.txtCodebar);
             this.tabPage2.Controls.Add(this.label2);
             this.tabPage2.Location = new System.Drawing.Point(4, 34);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(985, 441);
+            this.tabPage2.Size = new System.Drawing.Size(985, 252);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Pesquisar por código";
             // 
-            // dataGridView2
+            // gridCode
             // 
-            this.dataGridView2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.gridCode.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView2.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(171)))), ((int)(((byte)(180)))), ((int)(((byte)(181)))));
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Location = new System.Drawing.Point(6, 39);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.RowTemplate.Height = 25;
-            this.dataGridView2.Size = new System.Drawing.Size(973, 396);
-            this.dataGridView2.TabIndex = 10;
+            this.gridCode.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(171)))), ((int)(((byte)(180)))), ((int)(((byte)(181)))));
+            this.gridCode.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridCode.Location = new System.Drawing.Point(6, 39);
+            this.gridCode.Name = "gridCode";
+            this.gridCode.RowTemplate.Height = 25;
+            this.gridCode.Size = new System.Drawing.Size(973, 207);
+            this.gridCode.TabIndex = 10;
             // 
             // txtCodebar
             // 
@@ -265,13 +229,13 @@
             this.Text = "Gestor de medicamentos";
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
-            this.tabControl1.ResumeLayout(false);
+            this.tabInfos.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridName)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridCode)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -281,19 +245,15 @@
         private GroupBox groupBox1;
         private Button btnImportFile;
         private GroupBox groupBox2;
-        private TabControl tabControl1;
+        private TabControl tabInfos;
         private TabPage tabPage1;
         private TabPage tabPage2;
         private TextBox txtName;
         private Label label1;
         private Button btnSearch;
-        private DataGridView dataGridView1;
-        private DataGridView dataGridView2;
         private TextBox txtCodebar;
         private Label label2;
-        private DataGridViewTextBoxColumn Nome;
-        private DataGridViewTextBoxColumn Produto;
-        private DataGridViewTextBoxColumn Apresentacao;
-        private DataGridViewTextBoxColumn PFIsento;
+        public DataGridView gridName;
+        public DataGridView gridCode;
     }
 }

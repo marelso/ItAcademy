@@ -22,6 +22,7 @@
         public double? PF17 { get; set; }
         public double? PF17ALC { get; set; }
         public double? PF175 { get; set; }
+        public double? PF175ALC { get; set; }
         public double? PF18 { get; set; }
         public double? PF18ALC { get; set; }
         public double? PF20 { get; set; }
