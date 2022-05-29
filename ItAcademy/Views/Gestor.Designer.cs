@@ -31,6 +31,9 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnImportFile = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnConsulta = new System.Windows.Forms.Button();
+            this.gridConcessao = new System.Windows.Forms.DataGridView();
             this.btnSearch = new System.Windows.Forms.Button();
             this.tabInfos = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -43,6 +46,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridConcessao)).BeginInit();
             this.tabInfos.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridName)).BeginInit();
@@ -58,7 +63,7 @@
             this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1005, 81);
+            this.groupBox1.Size = new System.Drawing.Size(1156, 81);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Importar arquivo";
@@ -80,22 +85,64 @@
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.groupBox3);
             this.groupBox2.Controls.Add(this.btnSearch);
             this.groupBox2.Controls.Add(this.tabInfos);
             this.groupBox2.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.groupBox2.Location = new System.Drawing.Point(12, 99);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(1005, 519);
+            this.groupBox2.Size = new System.Drawing.Size(1156, 519);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Informações do medicamento";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.Controls.Add(this.btnConsulta);
+            this.groupBox3.Controls.Add(this.gridConcessao);
+            this.groupBox3.Location = new System.Drawing.Point(6, 298);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(1140, 215);
+            this.groupBox3.TabIndex = 11;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Concessão de crédito";
+            // 
+            // btnConsulta
+            // 
+            this.btnConsulta.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnConsulta.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(15)))), ((int)(((byte)(20)))));
+            this.btnConsulta.Location = new System.Drawing.Point(9, 31);
+            this.btnConsulta.Name = "btnConsulta";
+            this.btnConsulta.Size = new System.Drawing.Size(114, 33);
+            this.btnConsulta.TabIndex = 12;
+            this.btnConsulta.Text = "Consultar";
+            this.btnConsulta.UseVisualStyleBackColor = true;
+            this.btnConsulta.Click += new System.EventHandler(this.btnConsulta_Click);
+            // 
+            // gridConcessao
+            // 
+            this.gridConcessao.AllowUserToAddRows = false;
+            this.gridConcessao.AllowUserToDeleteRows = false;
+            this.gridConcessao.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gridConcessao.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(171)))), ((int)(((byte)(180)))), ((int)(((byte)(181)))));
+            this.gridConcessao.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridConcessao.Location = new System.Drawing.Point(10, 70);
+            this.gridConcessao.Name = "gridConcessao";
+            this.gridConcessao.ReadOnly = true;
+            this.gridConcessao.RowTemplate.Height = 25;
+            this.gridConcessao.Size = new System.Drawing.Size(1124, 139);
+            this.gridConcessao.TabIndex = 11;
             // 
             // btnSearch
             // 
             this.btnSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSearch.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(15)))), ((int)(((byte)(20)))));
-            this.btnSearch.Location = new System.Drawing.Point(875, 33);
+            this.btnSearch.Location = new System.Drawing.Point(1026, 33);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(122, 31);
             this.btnSearch.TabIndex = 13;
@@ -113,7 +160,7 @@
             this.tabInfos.Location = new System.Drawing.Point(6, 34);
             this.tabInfos.Name = "tabInfos";
             this.tabInfos.SelectedIndex = 0;
-            this.tabInfos.Size = new System.Drawing.Size(993, 290);
+            this.tabInfos.Size = new System.Drawing.Size(1144, 258);
             this.tabInfos.TabIndex = 0;
             // 
             // tabPage1
@@ -125,7 +172,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 34);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(985, 252);
+            this.tabPage1.Size = new System.Drawing.Size(1136, 220);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Pesquisar por nome";
             // 
@@ -143,7 +190,7 @@
             this.gridName.ReadOnly = true;
             this.gridName.RowTemplate.Height = 25;
             this.gridName.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridName.Size = new System.Drawing.Size(973, 207);
+            this.gridName.Size = new System.Drawing.Size(1124, 175);
             this.gridName.TabIndex = 8;
             // 
             // txtName
@@ -153,7 +200,7 @@
             this.txtName.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtName.Location = new System.Drawing.Point(189, 6);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(790, 27);
+            this.txtName.Size = new System.Drawing.Size(941, 27);
             this.txtName.TabIndex = 7;
             // 
             // label1
@@ -175,7 +222,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 34);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(985, 252);
+            this.tabPage2.Size = new System.Drawing.Size(1136, 220);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Pesquisar por código";
             // 
@@ -189,7 +236,7 @@
             this.gridCode.Location = new System.Drawing.Point(6, 39);
             this.gridCode.Name = "gridCode";
             this.gridCode.RowTemplate.Height = 25;
-            this.gridCode.Size = new System.Drawing.Size(973, 207);
+            this.gridCode.Size = new System.Drawing.Size(1124, 175);
             this.gridCode.TabIndex = 10;
             // 
             // txtCodebar
@@ -199,7 +246,7 @@
             this.txtCodebar.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtCodebar.Location = new System.Drawing.Point(196, 6);
             this.txtCodebar.Name = "txtCodebar";
-            this.txtCodebar.Size = new System.Drawing.Size(783, 27);
+            this.txtCodebar.Size = new System.Drawing.Size(934, 27);
             this.txtCodebar.TabIndex = 9;
             // 
             // label2
@@ -217,7 +264,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(202)))), ((int)(((byte)(206)))), ((int)(((byte)(204)))));
-            this.ClientSize = new System.Drawing.Size(1029, 630);
+            this.ClientSize = new System.Drawing.Size(1180, 630);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
@@ -229,6 +276,8 @@
             this.Text = "Gestor de medicamentos";
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridConcessao)).EndInit();
             this.tabInfos.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
@@ -255,5 +304,8 @@
         private Label label2;
         public DataGridView gridName;
         public DataGridView gridCode;
+        private GroupBox groupBox3;
+        private Button btnConsulta;
+        private DataGridView gridConcessao;
     }
 }

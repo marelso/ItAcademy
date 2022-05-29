@@ -61,10 +61,63 @@ namespace ItAcademy.Services
 
                 data.Rows.Add(menor.Substancia, menor.Apresentacao, menor.Produto, menor.PFIsento);
 
-                data.Rows.Add( medicamentos.Count == 1 ? string.Format($"Apenas um registro encontrado.") : string.Format($"Diferença:"), medicamentos[medicamentos.Count - 1].PMCZero - medicamentos[0].PMCZero);
+                data.Rows.Add(medicamentos.Count == 1 ? string.Format($"Apenas um registro encontrado.") : string.Format($"Diferença:"), medicamentos.Count == 1 ? "" : medicamentos[medicamentos.Count - 1].PMCZero - medicamentos[0].PMCZero);
             }
 
             return data;
+        }
+
+        public DataTable ConsultarConcessaoCredito()
+        {
+            var data = new DataTable();
+            data.Columns.Add("Cassificação", typeof(string));
+            data.Columns.Add("Percentual", typeof(string));
+            data.Columns.Add("Gráfico", typeof(string));
+
+            int negativa = 0;
+            int positivo = 0;
+            int neutro = 0;
+            
+            var medicamentos = this._dbContext.Medicamentos.Where(m => m.Comercializacao2020).ToList();
+            foreach (var item in medicamentos)
+            {
+                switch(item.ConcessaoCredito.ToLower())
+                {
+                    case "positiva":
+                        positivo++;
+                        break;
+                    case "negativa":
+                        negativa++;
+                        break;
+                    case "neutra":
+                        neutro++;
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+            int completo = negativa + positivo + neutro;
+
+            float percentualNegativo = (negativa * 100F) / completo;
+            float percentualPositivo = (positivo * 100F) / completo;
+            float percentualNeutro = (neutro * 100F) / completo;
+
+            data.Rows.Add("Negativa", percentualNegativo.ToString("0.00") + "%", Grafico(percentualNegativo));
+            data.Rows.Add("Neutra  ", percentualNeutro.ToString("0.00") + "%", Grafico(percentualNeutro));
+            data.Rows.Add("Positiva", percentualPositivo.ToString("0.00") + "%", Grafico(percentualPositivo));
+            data.Rows.Add("Total: ", "100.00%", Grafico(100));
+
+            return data;
+        }
+
+        private string Grafico(float quantidade)
+        {
+            string retorno = Convert.ToBoolean((int)quantidade) ? string.Empty : "*";
+            for (int counter = 0; counter < Convert.ToInt32(quantidade); counter++)
+                retorno += "*";
+  
+            return retorno;
         }
 
         public void ImportDatabase(string csvPath)
