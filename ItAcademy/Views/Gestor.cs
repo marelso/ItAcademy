@@ -26,7 +26,10 @@ namespace ItAcademy
                 OpenFileDialog file = new OpenFileDialog();
                 file.ShowDialog();
 
-                service.ImportDatabase(file.FileName);
+                if(!string.IsNullOrEmpty(file.FileName))
+                    service.ImportDatabase(file.FileName);
+                else
+                    MessageBox.Show("Nenhum arquivo foi selecionado, a importação foi cancelada.", "Erro ao efetuar importação.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {
@@ -41,10 +44,16 @@ namespace ItAcademy
                 switch (tabInfos.SelectedIndex)
                 {
                     case 0:
-                        gridName.DataSource = service.GetMedicamentoByName(txtName.Text);
+                        if (!string.IsNullOrEmpty(txtName.Text))
+                            gridName.DataSource = service.GetMedicamentoByName(txtName.Text);
+                        else
+                            MessageBox.Show("Insira o nome do medicamento para pesquisar.", "Erro ao efetuar a pesquisa.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         break;
                     case 1:
-                        gridCode.DataSource = service.GetMedicamentosByCode(txtCodebar.Text);
+                        if(!string.IsNullOrEmpty(txtCodebar.Text))
+                            gridCode.DataSource = service.GetMedicamentosByCode(txtCodebar.Text);
+                        else
+                            MessageBox.Show("Insira o código do medicamento para pesquisar.", "Erro ao efetuar a pesquisa.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         break;
                     default:
                         MessageBox.Show("Erro:\n Selecione uma das guias possíveis.");
