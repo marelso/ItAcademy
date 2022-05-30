@@ -8,7 +8,7 @@ A solução foi desenvolvida em torno da plataforma .net, mais especificamente, 
 # Instalação
 Todos os arquivos necessários para execução foram fornecidos em conjunto a este documento. Existem algumas etapas de configuração para perfeita utilização do sistema, estes seguem listados abaixo.
 
-  * Persistência dos dados
+  * Persistência dos dados *
 Todos os dados gerados pela solução serão incluídos em uma pasta chamada “DB” no diretório raiz do sistema. Para isso, garanta que a pasta esteja presente no caminho “C:\”.
 Para trabalhar com os dados, a aplicação utiliza banco de dados (especificamente Sqlite). Os dados são lidos pela aplicação e, quando válidos, são passados para o banco. Por isso, é importante colocar o arquivo fornecido na pasta criada anteriormente. Apenas para fins de teste, a pasta “DB - Clean” possui um banco sem dados populados.
 
