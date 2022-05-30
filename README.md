@@ -3,7 +3,7 @@ O projeto consiste em uma solução para armazenar, ler e exibir os dados refere
 
 # Pré Requisitos
 A solução foi desenvolvida em torno da plataforma .net, mais especificamente, em sua versão 6. Portanto é necessário possuir o runtime que pode ser encontrado no link abaixo.
-  dotnet.microsoft.com
+  *dotnet.microsoft.com
 
 # Instalação
 Todos os arquivos necessários para execução foram fornecidos em conjunto a este documento. Existem algumas etapas de configuração para perfeita utilização do sistema, estes seguem listados abaixo.
