@@ -236,7 +236,7 @@ namespace ItAcademy.Services
                         sw.Write(log);
                     }
                     MessageBox.Show($"O sistema localizou registros corrigidos e/ou inconsistentes.\n Consulte o log de execução em: {path}.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+                } // Validação dos registros tratados e não tratados
             }
             catch (Exception ex)
             {
@@ -244,7 +244,7 @@ namespace ItAcademy.Services
             }
         }
         #region Funções
-        static string TratarLinha(string linha)
+        private static string TratarLinha(string linha)
         {
             string resposta = string.Empty;
             string[] partes = linha.Split("\"");
